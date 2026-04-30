@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Garamond Goods — Solids for your season.</title>
+<meta name="description" content="A menswear color analysis tool and curated catalog of solid-color basics, filtered to your season." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="/">Garamond Goods</a>
+    <nav class="nav">
+      <a href="#catalog">Catalog</a>
+      <a href="#method">Method</a>
+      <a href="#audit">Wardrobe Audit</a>
+      <a href="#seasons">The Twelve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -------------------------------------------------------- -->
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Menswear, color-aware.</p>
+      <h1>Solids that<br/>match your season.</h1>
+      <p class="lede">
+        A color analysis engine for men, paired with a curated catalog of
+        solid-color basics — shirts, knitwear, trousers — filtered to the
+        palette you actually wear. No theory lectures. No quizzes that go
+        nowhere. Find your season, then shop it.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#analysis">Begin color analysis</a>
+        <a class="btn ghost" href="#catalog">Browse the catalog</a>
+      </div>
+      <p class="meta">Free. No account required to start.</p>
+    </div>
+
+    <figure class="hero-swatch" aria-label="Twelve-season specimen, cycling">
+      <div class="specimen" id="hero-specimen">
+        <!-- six tiles, populated by JS -->
+        <div class="tile"><span class="hex"></span></div>
+        <div class="tile"><span class="hex"></span></div>
+        <div class="tile"><span class="hex"></span></div>
+        <div class="tile"><span class="hex"></span></div>
+        <div class="tile"><span class="hex"></span></div>
+        <div class="tile"><span class="hex"></span></div>
+      </div>
+      <figcaption>
+        <span class="season-name" id="hero-season">True Autumn</span>
+        <span class="dots" id="hero-dots" aria-hidden="true"></span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Three pillars ----------------------------------------------- -->
+  <section class="pillars" id="method">
+    <article>
+      <p class="num">01</p>
+      <h3>Find your season</h3>
+      <p>A twelve-season analysis built around the dimensions that actually
+         matter for menswear: depth, undertone, and contrast. Photograph-driven,
+         consistent, and free.</p>
+    </article>
+    <article>
+      <p class="num">02</p>
+      <h3>Shop the catalog</h3>
+      <p>Solid-color basics from across the menswear landscape, hex-tagged and
+         filtered to your palette. Every item links out — we don't hold
+         inventory.</p>
+    </article>
+    <article id="audit">
+      <p class="num">03</p>
+      <h3>Audit your wardrobe</h3>
+      <p>Upload what you already own. We'll tell you what fits your season,
+         what's close, and what to retire. A weekly digest keeps the list
+         honest.</p>
+    </article>
+  </section>
+
+  <!-- Twelve Seasons specimen grid -------------------------------- -->
+  <section class="seasons" id="seasons">
+    <header class="section-head">
+      <p class="eyebrow">The Twelve</p>
+      <h2>A specimen book of seasons.</h2>
+      <p class="sub">Six anchor swatches per season. The same palette logic the
+         catalog runs on.</p>
+    </header>
+    <div class="season-grid" id="season-grid"><!-- populated by JS --></div>
+  </section>
+
+  <!-- Catalog preview --------------------------------------------- -->
+  <section class="catalog" id="catalog">
+    <header class="section-head">
+      <p class="eyebrow">Catalog — filtered preview</p>
+      <h2>Solids, in your palette.</h2>
+      <p class="sub">A working slice of the catalog, filtered to True Autumn.
+         Switch seasons after analysis.</p>
+    </header>
+    <div class="product-grid" id="product-grid"><!-- populated by JS --></div>
+    <p class="catalog-foot">Affiliate links. We earn a small commission on
+       qualifying purchases. It does not affect what we list.</p>
+  </section>
+
+  <!-- Email -------------------------------------------------------- -->
+  <section class="email">
+    <div class="email-inner">
+      <h2>The weekly digest.</h2>
+      <p>One email a week. New solids in your palette, restocks, and the
+         occasional note on color, fabric, and fit. No filler.</p>
+      <form class="email-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Thank you.';">
+        <label class="sr-only" for="email">Email address</label>
+        <input id="email" type="email" placeholder="you@domain.com" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot-inner">
+    <p class="mark">Garamond Goods</p>
+    <p class="note">Built in Miami. Shop coming later this year.</p>
+    <p class="copy">© 2026 Garamond Goods. Named for Claude Garamond, typecutter, 1530.</p>
+  </div>
+</footer>
+
+<script src="palette.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
