@@ -3,137 +3,352 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Garamond Goods — Solids for your season.</title>
-<meta name="description" content="A menswear color analysis tool and curated catalog of solid-color basics, filtered to your season." />
-<meta name="theme-color" content="#1a1814" />
+<title>Garamond Goods — The colors that suit you.</title>
+<meta name="description" content="Twelve-season color analysis for men, paired with a catalog of solid-color basics filtered to your palette. Built in Miami." />
+<meta name="theme-color" content="#1a1714" />
+
+<meta property="og:title" content="Garamond Goods — The colors that suit you." />
+<meta property="og:description" content="A menswear color-analysis tool and a curated catalog of solid-color basics, filtered to your season." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://garamondgoods.com/" />
+<meta name="twitter:card" content="summary_large_image" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<header class="site-header">
-  <div class="bar">
-    <a class="wordmark" href="/">Garamond Goods</a>
-    <nav class="nav">
-      <a href="#catalog">Catalog</a>
-      <a href="#method">Method</a>
-      <a href="#audit">Wardrobe Audit</a>
-      <a href="#seasons">The Twelve</a>
-    </nav>
+<!-- ============================================================ -->
+<!-- Nav                                                          -->
+<!-- ============================================================ -->
+<nav class="top">
+  <div class="wrap inner">
+    <a class="brand" href="#top" aria-label="Garamond Goods home">Garamond Goods</a>
+    <ul>
+      <li><a href="#analysis" class="sc">Analysis</a></li>
+      <li><a href="#seasons"  class="sc">Seasons</a></li>
+      <li><a href="#catalog"  class="sc">Catalog</a></li>
+      <li><a href="#method"   class="sc">Method</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>Shop opens fall 2026</div>
   </div>
-</header>
+</nav>
 
-<main>
-
-  <!-- Hero -------------------------------------------------------- -->
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Menswear, color-aware.</p>
-      <h1>Solids that<br/>match your season.</h1>
-      <p class="lede">
-        A color analysis engine for men, paired with a curated catalog of
-        solid-color basics — shirts, knitwear, trousers — filtered to the
-        palette you actually wear. No theory lectures. No quizzes that go
-        nowhere. Find your season, then shop it.
-      </p>
-      <div class="cta-row">
-        <a class="btn primary" href="#analysis">Begin color analysis</a>
-        <a class="btn ghost" href="#catalog">Browse the catalog</a>
+<!-- ============================================================ -->
+<!-- Hero — split: editorial copy + composed still-life placeholder -->
+<!-- ============================================================ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="fade-in">
+        <div class="kicker sc">
+          Diagnosis
+          <span class="bullet"></span>
+          Catalog
+          <span class="bullet"></span>
+          House brand, soon
+        </div>
+        <h1 class="display">
+          The colors<br />that suit <em>you.</em>
+        </h1>
+        <p class="subline">
+          Upload five to ten photographs. The app returns your palette —
+          not four seasons but twelve, with hex values, reasoning,
+          and a catalog filtered to your result.
+        </p>
+        <div class="cta-row">
+          <button class="cta-link" data-open-upload>
+            Begin the analysis <span class="arr">→</span>
+          </button>
+          <span class="cta-aside">Takes about two minutes.</span>
+        </div>
       </div>
-      <p class="meta">Free. No account required to start.</p>
+
+      <div class="fade-in">
+        <!-- Placeholder shot card. Holds the GPT-Image prompt that will
+             be replaced by a generated still-life once the API is wired. -->
+        <div class="shot wide" role="img" aria-label="Flat-lay of six folded tees in a True Autumn palette">
+          <span class="label">Plate 01 — Hero</span>
+          <span class="num">EXT. WINDOW · 10:14</span>
+          <div class="prompt">
+            <span class="k">prompt:</span> overhead flat-lay photograph,
+            six folded men's cotton tees arranged in a 3×2 grid on
+            textured cream paper: deep olive, bone, navy, rust,
+            chambray, charcoal. Soft north-facing window light,
+            minor fabric shadows, medium-format grain, no props,
+            no logos, no people. 4:3 crop.
+          </div>
+        </div>
+        <div class="figure-caption">figure 01 · tees / cream paper / daylight</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- § 01 / How it works                                          -->
+<!-- ============================================================ -->
+<section class="spread" id="analysis">
+  <div class="wrap">
+    <div class="spread-head fade-in">
+      <div class="num">§ 01 / How it works</div>
+      <h2>An analysis, not<br />a <em>horoscope.</em></h2>
+      <div class="deck">
+        Five to ten photographs, any phone, any lighting — a few in
+        daylight if you have them. The model reads skin, eye, and hair
+        against a calibrated set, then sorts you into one of twelve
+        palettes with reasoning you can argue with.
+      </div>
     </div>
 
-    <figure class="hero-swatch" aria-label="Twelve-season specimen, cycling">
-      <div class="specimen" id="hero-specimen">
-        <!-- six tiles, populated by JS -->
-        <div class="tile"><span class="hex"></span></div>
-        <div class="tile"><span class="hex"></span></div>
-        <div class="tile"><span class="hex"></span></div>
-        <div class="tile"><span class="hex"></span></div>
-        <div class="tile"><span class="hex"></span></div>
-        <div class="tile"><span class="hex"></span></div>
+    <div class="how-grid fade-in">
+      <div class="num mono">fig. 01 · flow</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <div>
+            <h3>Upload</h3>
+            <p>Five to ten photographs. Natural light preferred, but not required. Faces visible, no heavy filters. We strip EXIF on ingest.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <div>
+            <h3>Calibrate</h3>
+            <p>Each image is white-balanced against a reference chart embedded in the model. We isolate skin, lip, eye, and hair before sampling.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <div>
+            <h3>Diagnose</h3>
+            <p>Your undertone, value, and chroma map onto the twelve-season grid. The result comes with the reasoning: warmth cues, contrast, the tie-breakers.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">04</div>
+          <div>
+            <h3>Audit</h3>
+            <p>Optional: photograph the tees you already own. We tell you which are pulling their weight and which are quietly working against you.</p>
+          </div>
+        </div>
       </div>
-      <figcaption>
-        <span class="season-name" id="hero-season">True Autumn</span>
-        <span class="dots" id="hero-dots" aria-hidden="true"></span>
-      </figcaption>
-    </figure>
-  </section>
 
-  <!-- Three pillars ----------------------------------------------- -->
-  <section class="pillars" id="method">
-    <article>
-      <p class="num">01</p>
-      <h3>Find your season</h3>
-      <p>A twelve-season analysis built around the dimensions that actually
-         matter for menswear: depth, undertone, and contrast. Photograph-driven,
-         consistent, and free.</p>
-    </article>
-    <article>
-      <p class="num">02</p>
-      <h3>Shop the catalog</h3>
-      <p>Solid-color basics from across the menswear landscape, hex-tagged and
-         filtered to your palette. Every item links out — we don't hold
-         inventory.</p>
-    </article>
-    <article id="audit">
-      <p class="num">03</p>
-      <h3>Audit your wardrobe</h3>
-      <p>Upload what you already own. We'll tell you what fits your season,
-         what's close, and what to retire. A weekly digest keeps the list
-         honest.</p>
-    </article>
-  </section>
-
-  <!-- Twelve Seasons specimen grid -------------------------------- -->
-  <section class="seasons" id="seasons">
-    <header class="section-head">
-      <p class="eyebrow">The Twelve</p>
-      <h2>A specimen book of seasons.</h2>
-      <p class="sub">Six anchor swatches per season. The same palette logic the
-         catalog runs on.</p>
-    </header>
-    <div class="season-grid" id="season-grid"><!-- populated by JS --></div>
-  </section>
-
-  <!-- Catalog preview --------------------------------------------- -->
-  <section class="catalog" id="catalog">
-    <header class="section-head">
-      <p class="eyebrow">Catalog — filtered preview</p>
-      <h2>Solids, in your palette.</h2>
-      <p class="sub">A working slice of the catalog, filtered to True Autumn.
-         Switch seasons after analysis.</p>
-    </header>
-    <div class="product-grid" id="product-grid"><!-- populated by JS --></div>
-    <p class="catalog-foot">Affiliate links. We earn a small commission on
-       qualifying purchases. It does not affect what we list.</p>
-  </section>
-
-  <!-- Email -------------------------------------------------------- -->
-  <section class="email">
-    <div class="email-inner">
-      <h2>The weekly digest.</h2>
-      <p>One email a week. New solids in your palette, restocks, and the
-         occasional note on color, fabric, and fit. No filler.</p>
-      <form class="email-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Thank you.';">
-        <label class="sr-only" for="email">Email address</label>
-        <input id="email" type="email" placeholder="you@domain.com" required />
-        <button type="submit">Subscribe</button>
-      </form>
+      <div>
+        <div class="shot tall">
+          <span class="label">Plate 02 — Artifact</span>
+          <span class="num">STILL LIFE · 14:22</span>
+          <div class="prompt">
+            <span class="k">prompt:</span> still life, a Pantone-style
+            swatch book opened to a spread of earth tones on a
+            linen-covered desk, a small stack of folded tees to one
+            side, brass loupe resting on the page. Shallow depth of
+            field, 35mm, editorial stillness, no hands, no screens,
+            no brand marks.
+          </div>
+        </div>
+        <div class="figure-caption">figure 02 · swatch book / loupe / linen</div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</main>
+<!-- ============================================================ -->
+<!-- § 02 / Seasons — populated by app.js from window.SEASONS     -->
+<!-- ============================================================ -->
+<section class="spread" id="seasons">
+  <div class="wrap">
+    <div class="spread-head fade-in">
+      <div class="num">§ 02 / Seasons</div>
+      <h2>One of these<br />is <em>yours.</em></h2>
+      <div class="deck">
+        The old system splits the calendar into four seasons. The newly
+        refined system gives each season three sub-seasons, denoted by
+        Bright, Light, Dark, and Soft.
+      </div>
+    </div>
 
-<footer class="site-footer">
-  <div class="foot-inner">
-    <p class="mark">Garamond Goods</p>
-    <p class="note">Built in Miami. Shop coming later this year.</p>
-    <p class="copy">© 2026 Garamond Goods. Named for Claude Garamond, typecutter, 1530.</p>
+    <div class="fade-in">
+      <div class="seasons" id="season-grid">
+        <!-- 12 cards rendered by app.js — pre-rendering kept out so palette.js
+             stays the single source of truth. -->
+      </div>
+      <div class="seasons-meta">
+        <span>hover a strip to reveal hex values</span>
+        <span>72 swatches · 12 seasons</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- § 03 / Catalog — filters + product grid rendered by app.js   -->
+<!-- ============================================================ -->
+<section class="spread" id="catalog">
+  <div class="wrap">
+    <div class="spread-head fade-in">
+      <div class="num">§ 03 / The catalog</div>
+      <h2>Filtered to<br />your <em>season.</em></h2>
+      <div class="deck">
+        The full catalog opens after analysis and is filtered to your
+        result. Below, six tees in True Autumn — a sample of how the
+        grid reads.
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <div class="filters" id="family-filters">
+        <span class="label mono">SEASON</span>
+        <!-- chips rendered by app.js -->
+      </div>
+
+      <div class="filters" id="sub-filters">
+        <span class="label mono">SUB‑SEASON</span>
+        <!-- chips rendered by app.js -->
+      </div>
+
+      <div class="color-filter" id="color-filters">
+        <span class="label mono">COLOR</span>
+        <!-- swatches rendered by app.js -->
+      </div>
+
+      <div class="catalog-grid" id="catalog-grid">
+        <!-- 6 product cards rendered by app.js -->
+      </div>
+
+      <div class="catalog-foot">
+        <div class="mono" id="catalog-counter">
+          <!-- updated by app.js -->
+        </div>
+        <a href="#" class="cta-link">
+          View the full preview <span class="arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- § 04 / Method                                                -->
+<!-- ============================================================ -->
+<section class="spread" id="method">
+  <div class="wrap">
+    <div class="method-layout fade-in">
+      <div class="method-side">
+        <div class="num">§ 04 / A note on method</div>
+        <h2>Directional,<br />not <em>definitive.</em></h2>
+      </div>
+      <div class="body">
+        <p>
+          Phone photographs are imperfect sensors. Light shifts between
+          frames. Skin reads differently at 9 a.m. than at 6 p.m. The
+          model corrects for this — white-balancing against a reference
+          chart, sampling across images, weighing hair and eye against
+          lip and iris. But the result you receive is
+          <em>directional, not definitive.</em>
+        </p>
+        <p>
+          The twelve-season system is a useful tool. Your palette is a
+          starting point, not a decree. Wear what you want; the catalog
+          is here to make the starting point easier to find.
+        </p>
+        <p class="signoff">— The editors, Miami</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Footer                                                       -->
+<!-- ============================================================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Garamond Goods</div>
+        <div class="foot-blurb">
+          The color-aware menswear store. The diagnosis comes first;
+          the catalog follows.
+        </div>
+      </div>
+      <div>
+        <h4 class="sc">The App</h4>
+        <ul>
+          <li><a href="#analysis">Begin analysis</a></li>
+          <li><a href="#seasons">The twelve</a></li>
+          <li><a href="#method">Method</a></li>
+          <li><a href="#analysis">Wardrobe audit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="sc">The Shop</h4>
+        <ul>
+          <li><a href="#catalog">Catalog preview</a></li>
+          <li><a href="#">House brand</a></li>
+          <li><a href="#">Weekly digest</a></li>
+          <li><a href="#">Size guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="sc">Elsewhere</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Colophon</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-line">
+      <div class="tag">
+        Garamond Goods is a menswear project. Built in Miami. Shop coming later this year.
+      </div>
+      <div>© MMXXVI</div>
+    </div>
   </div>
 </footer>
+
+<!-- ============================================================ -->
+<!-- Upload modal — hidden by default, opened by data-open-upload -->
+<!-- ============================================================ -->
+<div class="modal-backdrop" id="upload-backdrop" role="dialog" aria-modal="true" aria-labelledby="upload-title" aria-hidden="true">
+  <div class="modal">
+    <button class="close" id="upload-close" type="button">CLOSE · ESC</button>
+    <h3 id="upload-title">Begin the <em>analysis</em></h3>
+    <div class="sub">
+      Five to ten photographs, any phone. Faces visible, no heavy filters.
+      A couple in daylight if you have them.
+    </div>
+
+    <div class="drop" id="upload-drop">
+      <div class="glyph">✦</div>
+      <div class="t">Drop your photographs here</div>
+      <div class="s">JPG, PNG, HEIC · up to 10 files · EXIF stripped on upload</div>
+      <div class="browse" id="upload-browse">or browse</div>
+    </div>
+
+    <div class="thumbs" id="upload-thumbs">
+      <!-- 10 placeholder slots rendered by app.js -->
+    </div>
+
+    <div class="specs">
+      <div class="item">
+        <div class="l">PHOTOS</div>
+        <div class="v" id="upload-count-v">0 of 10 (5 more to begin)</div>
+      </div>
+      <div class="item">
+        <div class="l">ESTIMATED TIME</div>
+        <div class="v">~ 2 minutes</div>
+      </div>
+      <div class="item">
+        <div class="l">PRIVACY</div>
+        <div class="v">EXIF stripped · photos auto-delete in 24h</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="palette.js"></script>
 <script src="app.js"></script>

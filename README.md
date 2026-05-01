@@ -1,9 +1,8 @@
 # Garamond Goods
 
-Menswear color analysis tool and curated catalog of solid-color basics.
-Phase 1: software-first MVP — analysis + filtered catalog + wardrobe audit + weekly digest.
-
-This repository currently holds the static landing page. Deployed via GitHub Pages.
+Twelve-season menswear color analysis paired with a curated catalog of
+solid-color basics. Phase 1 is a software-first MVP: analysis + filtered
+catalog + wardrobe audit + weekly digest. Built in Miami.
 
 ## Local preview
 
@@ -12,16 +11,32 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-## Deploy
-
-GitHub Actions deploys to Pages on push to `main` or `claude/create-website-design-4N8Jd`.
-Enable Pages in repo Settings → Pages → Source: **GitHub Actions** to activate.
-
 ## Files
 
-- `index.html` — landing page
-- `styles.css` — atelier styles (EB Garamond + Inter)
-- `palette.js` — twelve-season palette + hero cycle order + catalog preview data
-- `app.js` — specimen grid render, hero cycle, catalog render
+- `index.html` — pre-rendered static markup for nav, hero, how-it-works,
+  methodology, footer, and modal shell. Mounts the seasons grid and
+  catalog into named `<div>` hosts.
+- `styles.css` — full design system: cream paper over warm ink, EB
+  Garamond + JetBrains Mono, editorial-spread layout, hover-reveal hex
+  strips on the seasons grid. One mobile breakpoint at 880px.
+- `palette.js` — single source of truth: 12 seasons × 6 swatches each,
+  family/sub-season taxonomy, six tee styles. Hangs off `window.SEASONS`,
+  `window.FAMILIES`, `window.SUB_BY_FAMILY`, `window.TEE_STYLES`.
+- `app.js` — vanilla JS: renders the seasons grid and catalog, wires
+  family/sub/color filter state, scroll fade-in via IntersectionObserver,
+  upload-modal open/close + drop-zone counter.
 
-Built in Miami. Shop coming later this year.
+## Image generation (next)
+
+Catalog and hero "shot" placeholder cards display the GPT Image prompt
+they will be replaced by. The plate labels (`Plate 01 — Hero`,
+`Plate 02 — Artifact`, `Plate 03..N — products`) are stable identifiers
+for swapping in generated images later.
+
+## Deploy
+
+GitHub Actions deploys to Pages on push to `main`. The workflow is at
+`.github/workflows/pages.yml` — it uploads the repo root as the Pages
+artifact, so no build step is needed.
+
+Shop opens fall 2026.
