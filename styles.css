@@ -301,8 +301,123 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 
+/* Shop head ------------------------------------------------------ */
+.shop-head {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 32px 28px;
+}
+.shop-head h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 8px 0 14px;
+}
+.shop-head .sub {
+  font-size: 19px;
+  color: var(--ink-soft);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* Filters -------------------------------------------------------- */
+.filters {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 32px 8px;
+  border-top: 1px solid var(--rule);
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 36px;
+}
+.filter { display: flex; flex-direction: column; gap: 10px; }
+.filter label,
+.filter .filter-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.season-filter select {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 11px 38px 11px 14px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1814' fill='none' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  min-width: 220px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.filter-status {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 0 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.link-btn {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid currentColor;
+}
+.link-btn:hover { color: var(--ink); }
+
 /* Catalog -------------------------------------------------------- */
 .catalog { padding-bottom: 96px; border-bottom: 1px solid var(--rule); }
+a.product { color: inherit; }
+a.product .swatch-block { transition: border-color 0.15s; }
+a.product:hover .swatch-block { border-color: var(--ink); }
+a.product:hover .name { color: var(--accent); }
+a.product[aria-disabled="true"] { cursor: default; }
+.empty-state {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  color: var(--ink-soft);
+}
 .product-grid {
   max-width: 1240px;
   margin: 0 auto;
@@ -375,6 +490,11 @@ a { color: inherit; text-decoration: none; }
   display: inline-block;
   width: 10px; height: 10px;
   border: 1px solid var(--rule);
+}
+.catalog-cta {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 32px 0;
 }
 .catalog-foot {
   max-width: 1240px;
@@ -480,6 +600,9 @@ a { color: inherit; text-decoration: none; }
   .season-grid { grid-template-columns: repeat(2, 1fr); padding: 16px 28px 0; }
   .product-grid { grid-template-columns: repeat(2, 1fr); padding: 24px 28px 0; }
   .section-head { padding: 72px 28px 24px; }
+  .shop-head { padding: 56px 28px 24px; }
+  .filters { padding: 24px 28px 8px; }
+  .filter-row { gap: 28px; }
   .email-inner { grid-template-columns: 1fr; padding: 72px 28px; }
   .nav { display: none; }
   .bar { padding: 16px 28px; }

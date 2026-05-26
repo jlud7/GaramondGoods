@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Catalog — Garamond Goods</title>
+<meta name="description" content="Solid-color menswear basics, hex-tagged and filtered to your season. Every item links out — we don't hold inventory." />
+<meta name="theme-color" content="#1a1814" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="index.html">Garamond Goods</a>
+    <nav class="nav">
+      <a href="catalog.html" aria-current="page">Catalog</a>
+      <a href="index.html#method">Method</a>
+      <a href="index.html#audit">Wardrobe Audit</a>
+      <a href="index.html#seasons">The Twelve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Shop head ---------------------------------------------------- -->
+  <section class="shop-head">
+    <p class="eyebrow">Catalog</p>
+    <h1>Solids, in your palette.</h1>
+    <p class="sub">Solid-color basics from across the menswear landscape,
+       hex-tagged and filtered to your season. Every item links out — we
+       don't hold inventory.</p>
+  </section>
+
+  <!-- Filters ------------------------------------------------------ -->
+  <section class="filters" aria-label="Catalog filters">
+    <div class="filter-row">
+      <div class="filter season-filter">
+        <label for="season-select">Season</label>
+        <select id="season-select">
+          <option value="all">All seasons</option>
+          <!-- optgroups populated by JS -->
+        </select>
+      </div>
+      <div class="filter garment-filter">
+        <span class="filter-label">Garment</span>
+        <div class="chips" id="garment-chips" role="group" aria-label="Filter by garment">
+          <!-- chips populated by JS -->
+        </div>
+      </div>
+    </div>
+    <div class="filter-status">
+      <span id="result-count" aria-live="polite"></span>
+      <button type="button" id="clear-filters" class="link-btn" hidden>Clear filters</button>
+    </div>
+  </section>
+
+  <!-- Product grid ------------------------------------------------- -->
+  <section class="catalog">
+    <div class="product-grid" id="product-grid"><!-- populated by JS --></div>
+    <p class="empty-state" id="empty-state" hidden>
+      No solids in this combination yet. Try a different season or garment.
+    </p>
+    <p class="catalog-foot">Affiliate links. We earn a small commission on
+       qualifying purchases. It does not affect what we list.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot-inner">
+    <p class="mark">Garamond Goods</p>
+    <p class="note">Built in Miami. Shop coming later this year.</p>
+    <p class="copy">© 2026 Garamond Goods. Named for Claude Garamond, typecutter, 1530.</p>
+  </div>
+</footer>
+
+<script src="palette.js"></script>
+<script src="catalog.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>

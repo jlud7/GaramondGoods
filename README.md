@@ -20,8 +20,16 @@ Enable Pages in repo Settings → Pages → Source: **GitHub Actions** to activa
 ## Files
 
 - `index.html` — landing page
+- `catalog.html` — filterable affiliate catalog (the shop)
 - `styles.css` — atelier styles (EB Garamond + Inter)
-- `palette.js` — twelve-season palette + hero cycle order + catalog preview data
-- `app.js` — specimen grid render, hero cycle, catalog render
+- `palette.js` — twelve-season palette + hero cycle order + landing catalog preview data
+- `app.js` — specimen grid render, hero cycle, landing catalog preview render
+- `catalog.js` — full product catalog data model + garment categories
+- `shop.js` — catalog filtering (season + garment), shareable URL state
+
+The catalog filters by season and garment and reflects state in the URL
+(`catalog.html?season=True+Autumn&garment=Knitwear`), so a future analysis
+step can deep-link a visitor straight into their palette. Affiliate `url`
+fields in `catalog.js` are placeholders (`#`) until real deep-links are added.
 
 Built in Miami. Shop coming later this year.
