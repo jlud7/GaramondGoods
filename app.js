@@ -2,17 +2,24 @@
    Garamond Goods — page interactions
    ================================================================
    Renders into the static index.html shell:
-     • The 12-season specimen grid (#season-grid)
-     • The catalog filters + product grid (#family-filters, #sub-filters,
-       #color-filters, #catalog-grid, #catalog-counter)
+     • The 12-season specimen grid (#season-grid) — cards are clickable and
+       jump into the catalog filtered to that season
+     • The catalog: real products (catalog.js) tagged to seasons by the ΔE
+       classifier (classify.js), filtered to the active season, rendered as
+       outbound affiliate links that log a click to Supabase
    Wires up:
      • Scroll fade-in via IntersectionObserver
-     • Upload modal open/close + ESC + drop-zone counter
-   Reads from palette.js: SEASONS, FAMILIES, SUB_BY_FAMILY, TEE_STYLES.
+     • Upload modal (photo-analysis preview) open/close
+   Reads: window.SEASONS, FAMILIES, SUB_BY_FAMILY (palette.js),
+          window.CATALOG (catalog.js), window.classifySeason (classify.js).
    ============================================================== */
 
 (function () {
   "use strict";
+
+  // --- Supabase (publishable key — safe in the browser; RLS protects data) ---
+  const SUPABASE_URL = "https://tiufjhllkxddctuihzaz.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_if1PYVYZPVy2pk1J35_p4w_2MVzfF08";
 
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
@@ -26,8 +33,6 @@
       else if (k.startsWith("on") && typeof v === "function") {
         node.addEventListener(k.slice(2).toLowerCase(), v);
       } else if (k === "style" && typeof v === "object") {
-        // CSS custom properties (--foo) need setProperty; everything else
-        // can use direct assignment for the camelCase ergonomics.
         for (const [prop, val] of Object.entries(v)) {
           if (prop.startsWith("--")) node.style.setProperty(prop, val);
           else node.style[prop] = val;
@@ -46,7 +51,51 @@
   };
 
   // ---------------------------------------------------------------
-  // Seasons specimen grid
+  // Intent logging — fire-and-forget click event to Supabase.
+  // keepalive lets the request finish even as a new tab opens.
+  // ---------------------------------------------------------------
+  function logClick(p) {
+    try {
+      const season = activeSeason();
+      fetch(SUPABASE_URL + "/rest/v1/click_events", {
+        method: "POST",
+        keepalive: true,
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify({
+          event_type: "product_click",
+          product_id: p.id,
+          brand: p.brand,
+          season: season ? season.key : null,
+          color_hex: p.hex,
+          href: p.url,
+        }),
+      }).catch(() => {});
+    } catch (e) {
+      /* never block the outbound click */
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Tag every product to its season(s) once, via the ΔE classifier.
+  // ---------------------------------------------------------------
+  function tagCatalog() {
+    if (!window.CATALOG || !window.classifySeason) return;
+    for (const p of window.CATALOG) {
+      if (p._seasons) continue;
+      const r = window.classifySeason(p.hex);
+      p._seasons = r.seasons;
+      p._dist = {};
+      r.all.forEach((s) => { p._dist[s.key] = s.distance; });
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Seasons specimen grid — each card jumps into the catalog
   // ---------------------------------------------------------------
   function renderSeasons() {
     const host = $("#season-grid");
@@ -77,11 +126,26 @@
       );
 
       const note = el("div", { class: "season-note-wrap" }, [
-        el("div", { class: "season-note" }, season.note),
+        el("div", { class: "season-note" }, "Shop " + season.name + " →"),
       ]);
 
-      return el("div", { class: "season" }, [head, swatches, note]);
+      return el("button", {
+        class: "season",
+        type: "button",
+        "aria-label": "Shop " + season.name,
+        onclick: () => goToSeason(season),
+      }, [head, swatches, note]);
     }));
+  }
+
+  function goToSeason(season) {
+    // season.name is "<Sub> <Family>", so the sub is the leading word.
+    catalog.family = season.family;
+    catalog.sub = season.name.split(" ")[0];
+    catalog.colorIdx = null;
+    renderCatalog();
+    const target = $("#catalog");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   // ---------------------------------------------------------------
@@ -90,7 +154,7 @@
   const catalog = {
     family: "Autumn",
     sub: "True",
-    colorIdx: null, // null = all
+    colorIdx: null, // null = all colors in season
   };
 
   function activeSeason() {
@@ -101,7 +165,6 @@
   function renderFamilyChips() {
     const host = $("#family-filters");
     if (!host) return;
-    // Keep the leading <span class="label"> and replace siblings.
     $$(".chip", host).forEach((n) => n.remove());
     for (const f of window.FAMILIES) {
       host.appendChild(el("button", {
@@ -149,7 +212,9 @@
       type: "button",
       onclick: () => {
         catalog.colorIdx = null;
-        renderCatalog();
+        renderProducts();
+        renderColorFilters();
+        renderCounter();
       },
     }, "All"));
 
@@ -161,7 +226,9 @@
         "aria-label": `${c.label} ${c.hex}`,
         onclick: () => {
           catalog.colorIdx = (catalog.colorIdx === i) ? null : i;
-          renderCatalog();
+          renderProducts();
+          renderColorFilters();
+          renderCounter();
         },
       }, [
         el("span", { class: "cs-fill" }),
@@ -173,37 +240,66 @@
     });
   }
 
+  // Products matching the active season (+ optional color narrowing).
+  function filteredProducts() {
+    const season = activeSeason();
+    if (!season) return [];
+    let list = (window.CATALOG || []).filter(
+      (p) => p._seasons && p._seasons.includes(season.key)
+    );
+    if (catalog.colorIdx !== null && window.deltaE2000 && window.hexToLab) {
+      const target = season.swatches[catalog.colorIdx];
+      if (target) {
+        const tLab = window.hexToLab(target.hex);
+        list = list.filter(
+          (p) => window.deltaE2000(window.hexToLab(p.hex), tLab) <= 13
+        );
+      }
+    }
+    list.sort((a, b) => (a._dist[season.key] ?? 99) - (b._dist[season.key] ?? 99));
+    return list;
+  }
+
+  function productCard(p) {
+    const photo = el("div", { class: "photo", style: { background: p.hex } }, [
+      el("span", { class: "plabel" }, p.brand),
+      el("div", { class: "alt" }, "SHOP AT " + p.brand.toUpperCase() + " →"),
+    ]);
+    const meta = el("div", { class: "meta" }, [
+      el("div", {}, [
+        el("div", { class: "name" }, p.name),
+        el("div", { class: "sub" }, p.brand + " — " + p.colorName),
+      ]),
+      el("div", { class: "price" }, p.priceText),
+    ]);
+    return el("a", {
+      class: "product",
+      href: p.url,
+      target: "_blank",
+      rel: "sponsored noopener nofollow",
+      onclick: () => logClick(p),
+    }, [photo, meta]);
+  }
+
   function renderProducts() {
     const host = $("#catalog-grid");
     if (!host) return;
-
-    const season = activeSeason();
-    const palette = season ? season.swatches : [];
-
-    host.replaceChildren(...window.TEE_STYLES.map((p, i) => {
-      const sw = palette[p.swatchIdx] || palette[0] || { hex: "#999", label: "" };
-      const dimmed = catalog.colorIdx !== null && catalog.colorIdx !== p.swatchIdx;
-
-      const photo = el("div", { class: "photo" }, [
-        el("span", { class: "plabel" }, "Plate " + String(i + 3).padStart(2, "0")),
-        el("span", { class: "swatch-dot", style: { background: sw.hex } }),
-        el("div", { class: "pprompt" }, [
-          el("span", { class: "k" }, "prompt: "),
-          `men's ${p.cut} tee, folded flat on cream paper, ${sw.label.toLowerCase()} (${sw.hex}), soft daylight, no label`,
-        ]),
-        el("div", { class: "alt" }, "ALT · ON MODEL"),
-      ]);
-
-      const meta = el("div", { class: "meta" }, [
-        el("div", {}, [
-          el("div", { class: "name" }, p.name),
-          el("div", { class: "sub" }, "in " + sw.label),
-        ]),
-        el("div", { class: "price" }, p.price),
-      ]);
-
-      return el("div", { class: "product" + (dimmed ? " dimmed" : "") }, [photo, meta]);
-    }));
+    const list = filteredProducts();
+    if (!list.length) {
+      host.replaceChildren(el("div", { class: "catalog-empty" }, [
+        "No tees in this color yet. ",
+        el("button", {
+          class: "linkish",
+          type: "button",
+          onclick: () => {
+            catalog.colorIdx = null;
+            renderCatalog();
+          },
+        }, "View the whole season →"),
+      ]));
+      return;
+    }
+    host.replaceChildren(...list.map(productCard));
   }
 
   function renderCounter() {
@@ -211,12 +307,13 @@
     if (!host) return;
     const season = activeSeason();
     const palette = season ? season.swatches : [];
+    const n = filteredProducts().length;
+    const total = (window.CATALOG || []).length;
     const seasonLabel = `${catalog.sub} ${catalog.family}`.toLowerCase();
     const colorLabel = (catalog.colorIdx !== null && palette[catalog.colorIdx])
       ? ` · ${palette[catalog.colorIdx].label.toLowerCase()}`
       : "";
-    const showing = catalog.colorIdx === null ? "6 of 22" : "3 of 6";
-    host.textContent = `showing ${showing} · ${seasonLabel}${colorLabel} · tees`;
+    host.textContent = `showing ${n} of ${total} · ${seasonLabel}${colorLabel}`;
   }
 
   function renderCatalog() {
@@ -228,7 +325,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Upload modal
+  // Upload modal — photo-analysis preview (not yet wired to a model)
   // ---------------------------------------------------------------
   function initUploadModal() {
     const backdrop = $("#upload-backdrop");
@@ -241,7 +338,6 @@
 
     let count = 0;
 
-    // Render 10 placeholder slots once.
     if (thumbs && thumbs.children.length === 0) {
       for (let i = 0; i < 10; i++) {
         thumbs.appendChild(el("div", { class: "thumb" }, String(i + 1).padStart(2, "0")));
@@ -284,7 +380,6 @@
       if (e.key === "Escape" && backdrop.classList.contains("open")) closeModal();
     });
 
-    // Drop-zone — UI demo only, no upload yet.
     drop.addEventListener("dragover", (e) => {
       e.preventDefault();
       drop.classList.add("hover");
@@ -329,6 +424,7 @@
   // Boot
   // ---------------------------------------------------------------
   function boot() {
+    tagCatalog();
     renderSeasons();
     renderCatalog();
     initUploadModal();

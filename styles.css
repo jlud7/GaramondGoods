@@ -774,3 +774,79 @@ footer.foot {
   .spread-head h2 { font-size: 30px; }
   .method-side h2 { font-size: 30px; }
 }
+
+/* ================================================================
+   Aggregator + two-door hero — added with the live catalog build
+   ============================================================== */
+
+/* Primary hero door — filled pill; secondary stays an underline link */
+.cta-link.primary {
+  background: var(--ink);
+  color: var(--cream);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 13px 24px;
+}
+.cta-link.primary:hover { background: var(--ink-soft); border-color: var(--ink-soft); }
+
+/* Inline text-link button (e.g. "preview it →") */
+.linkish {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 0 0 1px;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.linkish:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Season cards are now buttons that jump into the catalog */
+button.season {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background .15s;
+}
+button.season:hover { background: rgba(26, 23, 20, 0.035); }
+
+/* Product cards are now outbound affiliate links; the "photo" is the
+   garment color itself until product-feed imagery is wired. */
+a.product { text-decoration: none; color: inherit; display: block; }
+.product .plabel {
+  background: rgba(242, 235, 220, 0.88);
+  padding: 3px 7px;
+  border-radius: 2px;
+  color: var(--ink-soft);
+}
+
+/* FTC affiliate disclosure under the catalog */
+.disclosure {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+  max-width: 54ch;
+  text-align: right;
+}
+
+/* Empty state when a color filter has no matches */
+.catalog-empty {
+  grid-column: 1 / -1;
+  padding: 36px 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 16px;
+}
+
+/* Offset anchor / scroll targets so the two-door jumps clear the sticky nav */
+section[id] { scroll-margin-top: 84px; }

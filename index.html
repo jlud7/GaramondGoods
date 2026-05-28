@@ -27,12 +27,12 @@
   <div class="wrap inner">
     <a class="brand" href="#top" aria-label="Garamond Goods home">Garamond Goods</a>
     <ul>
-      <li><a href="#analysis" class="sc">Analysis</a></li>
+      <li><a href="#catalog"  class="sc">Shop</a></li>
       <li><a href="#seasons"  class="sc">Seasons</a></li>
-      <li><a href="#catalog"  class="sc">Catalog</a></li>
+      <li><a href="#analysis" class="sc">How it works</a></li>
       <li><a href="#method"   class="sc">Method</a></li>
     </ul>
-    <div class="status"><span class="dot"></span>Shop opens fall 2026</div>
+    <div class="status"><span class="dot"></span>Catalog live · house brand soon</div>
   </div>
 </nav>
 
@@ -54,15 +54,21 @@
           The colors<br />that suit <em>you.</em>
         </h1>
         <p class="subline">
-          Upload five to ten photographs. The app returns your palette —
-          not four seasons but twelve, with hex values, reasoning,
-          and a catalog filtered to your result.
+          Solid-color basics from across menswear, filtered to the twelve-season
+          palette that actually suits you. Shop your colors now — or find your
+          season first.
         </p>
         <div class="cta-row">
-          <button class="cta-link" data-open-upload>
-            Begin the analysis <span class="arr">→</span>
-          </button>
-          <span class="cta-aside">Takes about two minutes.</span>
+          <a class="cta-link primary" href="#catalog">
+            Shop your colors <span class="arr">→</span>
+          </a>
+          <a class="cta-link" href="#seasons">
+            Find your season <span class="arr">→</span>
+          </a>
+        </div>
+        <div class="cta-aside">
+          Photo color analysis arrives this fall —
+          <button class="linkish" data-open-upload type="button">preview it →</button>
         </div>
       </div>
 
@@ -177,7 +183,7 @@
              stays the single source of truth. -->
       </div>
       <div class="seasons-meta">
-        <span>hover a strip to reveal hex values</span>
+        <span>click a season to shop it · hover to reveal hex</span>
         <span>72 swatches · 12 seasons</span>
       </div>
     </div>
@@ -193,9 +199,9 @@
       <div class="num">§ 03 / The catalog</div>
       <h2>Filtered to<br />your <em>season.</em></h2>
       <div class="deck">
-        The full catalog opens after analysis and is filtered to your
-        result. Below, six tees in True Autumn — a sample of how the
-        grid reads.
+        Solid-color basics from across menswear, matched to each season by
+        color. Pick a season — every tee shown suits it. Links go out to the
+        brand; we may earn a commission.
       </div>
     </div>
 
@@ -223,9 +229,10 @@
         <div class="mono" id="catalog-counter">
           <!-- updated by app.js -->
         </div>
-        <a href="#" class="cta-link">
-          View the full preview <span class="arr">→</span>
-        </a>
+        <div class="disclosure">
+          Affiliate links — Garamond Goods may earn a commission on purchases.
+          Prices &amp; availability are set by each brand.
+        </div>
       </div>
     </div>
   </div>
@@ -316,10 +323,11 @@
 <div class="modal-backdrop" id="upload-backdrop" role="dialog" aria-modal="true" aria-labelledby="upload-title" aria-hidden="true">
   <div class="modal">
     <button class="close" id="upload-close" type="button">CLOSE · ESC</button>
-    <h3 id="upload-title">Begin the <em>analysis</em></h3>
+    <h3 id="upload-title">Preview the <em>analysis</em></h3>
     <div class="sub">
-      Five to ten photographs, any phone. Faces visible, no heavy filters.
-      A couple in daylight if you have them.
+      A preview — the photo analysis launches this fall. Five to ten
+      photographs, any phone, faces visible. For now, find your season by
+      browsing the twelve seasons.
     </div>
 
     <div class="drop" id="upload-drop">
@@ -351,6 +359,8 @@
 </div>
 
 <script src="palette.js"></script>
+<script src="classify.js"></script>
+<script src="catalog.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

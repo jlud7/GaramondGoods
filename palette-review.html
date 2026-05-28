@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Palette review — reference sets</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root { --cream:#F2EBDC; --ink:#1a1714; --rule:#c9bfad; --mute:#8a7e6c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--cream); color:var(--ink);
+    font-family:'EB Garamond',serif; padding:48px 40px 80px; }
+  h1 { font-weight:500; font-size:30px; margin:0 0 6px; }
+  .sub { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--mute);
+    letter-spacing:.04em; margin-bottom:36px; max-width:70ch; line-height:1.6; }
+  .season { border-top:1px solid var(--rule); padding:26px 0; }
+  .shead { display:flex; align-items:baseline; gap:14px; margin-bottom:16px; }
+  .shead .nm { font-size:22px; font-weight:500; }
+  .shead .nm em { font-style:italic; color:var(--mute); font-weight:400; }
+  .shead .no { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--mute); }
+  .lab { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--mute); margin:0 0 8px; }
+  .row { display:grid; gap:8px; margin-bottom:18px; }
+  .row.display { grid-template-columns:repeat(6,1fr); max-width:560px; }
+  .row.reference { grid-template-columns:repeat(12,1fr); }
+  .chip { border:1px solid rgba(0,0,0,.08); border-radius:2px; overflow:hidden; }
+  .chip .sw { height:64px; }
+  .chip .cap { padding:5px 6px 6px; background:#fff; }
+  .chip .cn { font-size:12px; line-height:1.2; }
+  .chip .ch { font-family:'JetBrains Mono',monospace; font-size:8.5px; color:var(--mute); }
+  @media (max-width:1100px){ .row.reference{ grid-template-columns:repeat(6,1fr);} }
+  @media (max-width:680px){ .row.reference,.row.display{ grid-template-columns:repeat(4,1fr);} }
+</style>
+</head>
+<body>
+  <h1>Palette reference — review sheet</h1>
+  <div class="sub">DISPLAY = the 6 hero swatches shown on the site. REFERENCE = the ~12 menswear-weighted anchors used only by the &Delta;E classifier to tag products. Not deployed; <code>palette-reference</code> branch only.</div>
+  <div id="out"></div>
+  <script src="palette.js"></script>
+  <script>
+    const out = document.getElementById('out');
+    const chip = (c) => `<div class="chip"><div class="sw" style="background:${c.hex}"></div>`
+      + `<div class="cap"><div class="cn">${c.label}</div><div class="ch">${c.hex.toUpperCase()}</div></div></div>`;
+    window.SEASONS.forEach((s, i) => {
+      const [fam, ...rest] = s.name.split(' ');
+      out.insertAdjacentHTML('beforeend', `
+        <section class="season">
+          <div class="shead">
+            <div class="nm">${fam} <em>${rest.join(' ')}</em></div>
+            <div class="no">No. ${String(i+1).padStart(2,'0')} &middot; ${s.reference.length} anchors</div>
+          </div>
+          <div class="lab">Display &middot; ${s.swatches.length}</div>
+          <div class="row display">${s.swatches.map(chip).join('')}</div>
+          <div class="lab">Reference &middot; ${s.reference.length} (classifier)</div>
+          <div class="row reference">${s.reference.map(chip).join('')}</div>
+        </section>`);
+    });
+  </script>
+</body>
+</html>
