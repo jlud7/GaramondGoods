@@ -17,10 +17,6 @@
 (function () {
   "use strict";
 
-  // --- Supabase (publishable key — safe in the browser; RLS protects data) ---
-  const SUPABASE_URL = "https://tiufjhllkxddctuihzaz.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_if1PYVYZPVy2pk1J35_p4w_2MVzfF08";
-
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   const el = (tag, attrs = {}, children = []) => {
@@ -55,28 +51,15 @@
   // keepalive lets the request finish even as a new tab opens.
   // ---------------------------------------------------------------
   function logClick(p) {
-    try {
-      const season = activeSeason();
-      fetch(SUPABASE_URL + "/rest/v1/click_events", {
-        method: "POST",
-        keepalive: true,
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: "Bearer " + SUPABASE_KEY,
-          "Content-Type": "application/json",
-          Prefer: "return=minimal",
-        },
-        body: JSON.stringify({
-          event_type: "product_click",
-          product_id: p.id,
-          brand: p.brand,
-          season: season ? season.key : null,
-          color_hex: p.hex,
-          href: p.url,
-        }),
-      }).catch(() => {});
-    } catch (e) {
-      /* never block the outbound click */
+    const season = activeSeason();
+    if (window.ggLogClick) {
+      window.ggLogClick({
+        product_id: p.id,
+        brand: p.brand,
+        season: season ? season.key : null,
+        color_hex: p.hex,
+        href: p.url,
+      });
     }
   }
 
@@ -129,23 +112,12 @@
         el("div", { class: "season-note" }, "Shop " + season.name + " →"),
       ]);
 
-      return el("button", {
+      return el("a", {
         class: "season",
-        type: "button",
-        "aria-label": "Shop " + season.name,
-        onclick: () => goToSeason(season),
+        href: "/seasons/" + season.key,
+        "aria-label": season.name + " — palette and tees",
       }, [head, swatches, note]);
     }));
-  }
-
-  function goToSeason(season) {
-    // season.name is "<Sub> <Family>", so the sub is the leading word.
-    catalog.family = season.family;
-    catalog.sub = season.name.split(" ")[0];
-    catalog.colorIdx = null;
-    renderCatalog();
-    const target = $("#catalog");
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   // ---------------------------------------------------------------

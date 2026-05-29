@@ -802,21 +802,15 @@ footer.foot {
 }
 .linkish:hover { color: var(--ink); border-color: var(--ink); }
 
-/* Season cards are now buttons that jump into the catalog */
-button.season {
-  appearance: none;
-  -webkit-appearance: none;
-  border: 0;
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  font: inherit;
+/* Season cards are links to the per-season pages */
+a.season {
+  display: block;
+  text-decoration: none;
   color: inherit;
-  text-align: left;
-  width: 100%;
   cursor: pointer;
   transition: background .15s;
 }
-button.season:hover { background: rgba(26, 23, 20, 0.035); }
+.season:hover { background: rgba(26, 23, 20, 0.035); }
 
 /* Product cards are now outbound affiliate links; the "photo" is the
    garment color itself until product-feed imagery is wired. */
@@ -850,3 +844,33 @@ a.product { text-decoration: none; color: inherit; display: block; }
 
 /* Offset anchor / scroll targets so the two-door jumps clear the sticky nav */
 section[id] { scroll-margin-top: 84px; }
+
+/* ----- Per-season SEO pages ----- */
+.season-page { padding: 40px 0 24px; }
+.crumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mute); margin-bottom: 28px; }
+.crumb a { color: var(--ink-soft); text-decoration: none; }
+.crumb a:hover { color: var(--ink); }
+.crumb span { margin: 0 8px; }
+.season-hero { padding-bottom: 44px; border-bottom: 1px solid var(--rule); margin-bottom: 44px; }
+.season-hero .kicker { margin-bottom: 14px; }
+.season-hero h1.display { font-size: 72px; margin: 0 0 18px; }
+.season-hero .subline { margin: 0; max-width: 46ch; }
+.season-strip { max-width: 540px; margin-top: 30px; }
+.season-prose { max-width: 64ch; margin-bottom: 60px; }
+.season-prose p { font-size: 18px; line-height: 1.62; color: var(--ink-soft); margin: 0 0 1em; }
+.season-page h2 { font-family: var(--serif); font-weight: 400; font-size: 36px; letter-spacing: -0.01em; margin: 0 0 10px; }
+.season-page h2 em { font-style: italic; }
+.season-shop { margin-bottom: 64px; }
+.season-shop .deck { color: var(--ink-soft); font-size: 16px; margin: 0 0 32px; max-width: 58ch; }
+.season-shop .disclosure { text-align: left; margin-top: 22px; }
+.season-cross { border-top: 1px solid var(--rule); padding-top: 40px; }
+.cross-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
+.cross { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; padding: 10px; border: 1px solid var(--rule-soft); transition: border-color .15s, background .15s; }
+.cross:hover { border-color: var(--ink-soft); background: rgba(26, 23, 20, 0.02); }
+.cross-sw { display: inline-flex; flex-shrink: 0; }
+.cross-sw span { width: 8px; height: 20px; display: inline-block; }
+.cross-nm { font-size: 14px; }
+@media (max-width: 880px) {
+  .season-hero h1.display { font-size: 48px; }
+  .cross-grid { grid-template-columns: repeat(2, 1fr); }
+}
