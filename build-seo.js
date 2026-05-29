@@ -15,6 +15,7 @@ global.window = {};
 require("./palette.js");
 require("./classify.js");
 require("./catalog.js");
+require("./tee.js");
 const { SEASONS, CATALOG, classifySeason } = window;
 
 const ORIGIN = "https://garamondgoods.com";
@@ -148,7 +149,8 @@ const productCard = (p, key) =>
   `<a class="product" href="${esc(p.url)}" target="_blank" rel="sponsored noopener nofollow"` +
   ` data-id="${esc(p.id)}" data-brand="${esc(p.brand)}" data-hex="${p.hex}" data-season="${key}">` +
   `<div class="photo" style="background:${p.hex}"><span class="plabel">${esc(p.brand)}</span>` +
-  `<div class="alt">SHOP AT ${esc(p.brand.toUpperCase())} →</div></div>` +
+  `<div class="preview"><div class="tee-wrap">${window.ggTeeSVG(p.hex)}</div>` +
+  `<span class="preview-cta">Shop at ${esc(p.brand)} →</span></div></div>` +
   `<div class="meta"><div><div class="name">${esc(p.name)}</div>` +
   `<div class="sub">${esc(p.brand)} — ${esc(p.colorName)}</div></div>` +
   `<div class="price">${esc(p.priceText)}</div></div></a>`;

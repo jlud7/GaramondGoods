@@ -822,6 +822,39 @@ a.product { text-decoration: none; color: inherit; display: block; }
   color: var(--ink-soft);
 }
 
+/* Tinted tee mockup — revealed on hover (shown by default on touch) */
+.product .preview {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.product:hover .preview { opacity: 1; }
+.product .preview .tee-wrap { width: 64%; max-width: 150px; }
+.product .preview svg.tee {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 7px 16px rgba(26, 23, 20, 0.18));
+}
+.product .preview .preview-cta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+@media (hover: none) {
+  .product .preview { opacity: 1; }
+}
+
 /* FTC affiliate disclosure under the catalog */
 .disclosure {
   font-family: var(--mono);

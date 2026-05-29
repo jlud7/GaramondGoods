@@ -235,7 +235,10 @@
   function productCard(p) {
     const photo = el("div", { class: "photo", style: { background: p.hex } }, [
       el("span", { class: "plabel" }, p.brand),
-      el("div", { class: "alt" }, "SHOP AT " + p.brand.toUpperCase() + " →"),
+      el("div", { class: "preview" }, [
+        el("div", { class: "tee-wrap", html: window.ggTeeSVG ? window.ggTeeSVG(p.hex) : "" }),
+        el("span", { class: "preview-cta" }, "Shop at " + p.brand + " →"),
+      ]),
     ]);
     const meta = el("div", { class: "meta" }, [
       el("div", {}, [
