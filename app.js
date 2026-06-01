@@ -101,8 +101,8 @@
       // The flat-lay photo IS the palette — no color chips. Card = photo + name.
       const photo = el("div", { class: "season-photo" }, [
         el("img", {
-          src: "img/season-" + season.key + ".jpg",
-          alt: season.name + " palette — folded cotton tees",
+          src: "img/swatch-" + season.key + ".jpg",
+          alt: season.name + " — six tees in its palette",
           loading: "lazy",
           onerror: (e) => {
             const w = e.target.closest(".season-photo");

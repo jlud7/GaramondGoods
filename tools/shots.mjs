@@ -37,6 +37,18 @@ export const BOHO = [
   "Realistic cotton jersey texture with natural fabric drape.",
 ].join(" ");
 
+// Minimal "shirt swatch" house style for the homepage season strips — kept
+// deliberately identical scene-to-scene so all 12 read as one consistent set.
+export const SWATCH = [
+  "Overhead flat-lay product photograph, shot perfectly straight from directly above,",
+  "medium-format clarity with fine natural grain. Soft, even, almost shadowless daylight.",
+  "Plain smooth warm cream paper background (hex F2EBDC) and nothing else — no linen,",
+  "no swatch cards, no loupe, no props or other objects of any kind.",
+  "Muted, true-to-life, slightly desaturated color; realistic cotton jersey texture.",
+  "No people, no hands, no faces, no logos, no brand names, no text anywhere.",
+  "Clean, identical, repeatable studio composition.",
+].join(" ");
+
 // Helper for the four marquee season flat-lays.
 const season = (key, surface, light, colors) => ({
   id: `season-${key}`,
@@ -47,6 +59,20 @@ const season = (key, surface, light, colors) => ({
     `spacing on ${surface}. The four tees are exactly these colors: ` +
     colors.map(([n, h]) => `${n} (hex ${h.replace("#", "")})`).join(", ") +
     `. One small plain swatch card rests at the edge of the frame. ${light}`,
+});
+
+// One horizontal "shirt swatch" strip per season — six folded tees in a row, on
+// a plain cream background, identical composition across all twelve.
+const swatch = (key, colors) => ({
+  id: `swatch-${key}`,
+  slot: `homepage season grid — ${key}`,
+  aspect_ratio: "3:2",
+  preamble: SWATCH,
+  prompt:
+    "Six folded men's cotton crew tees arranged edge to edge in a single neat horizontal row " +
+    "that evenly fills the full width of the frame, vertically centered, like a row of fabric " +
+    "color swatches. The six tees, from left to right, are exactly: " +
+    colors.map(([n, h]) => `${n} (hex ${h.replace("#", "")})`).join(", ") + ".",
 });
 
 export const SHOTS = [
@@ -154,6 +180,19 @@ export const SHOTS = [
       "fabric, showing its drape and the ribbed collar. One small dried botanical sprig leans in at " +
       "the lower edge as a quiet boho accent. Shallow depth of field, sleek and minimal.",
   },
+  // 12 "shirt swatch" strips for the homepage season grid (palette.js swatch colors)
+  swatch("bright-spring", [["poppy","#E85D3D"],["marigold","#F2A900"],["clear green","#4FB477"],["bright teal","#2FB6AD"],["true blue","#2D6FE0"],["ivory","#F4EFD8"]]),
+  swatch("true-spring", [["warm cream","#EFE3C8"],["camel","#C99A5B"],["honey gold","#E6B325"],["leaf green","#6FA84B"],["teal","#2FA8A1"],["coral","#E4724A"]]),
+  swatch("light-spring", [["paper","#F5EEDC"],["buttercream","#F4E3A1"],["soft peach","#F4C7A8"],["light green","#B7CE96"],["sky","#9ED3D6"],["periwinkle","#8FA6D6"]]),
+  swatch("light-summer", [["shell","#EFE9E4"],["powder blue","#C5D4E2"],["dove grey","#AAB5C6"],["soft sage","#C2CDB4"],["petal","#D5B6C0"],["slate blue","#8EA7B5"]]),
+  swatch("true-summer", [["bone","#E4DED3"],["denim blue","#6E8AA6"],["slate blue","#4A6375"],["eucalyptus","#6E9089"],["mulberry","#9E7A86"],["raspberry","#A64158"]]),
+  swatch("soft-summer", [["oat","#DFD8CC"],["mushroom taupe","#8F8577"],["steel grey","#6F7E86"],["lichen","#8C9E83"],["ash rose","#A68E8B"],["graphite","#4F5B66"]]),
+  swatch("soft-autumn", [["linen","#D9CFB9"],["wheat","#9A7F5A"],["olive grove","#7E8460"],["caramel","#B58762"],["clay","#8F6A5A"],["fern","#5B6C60"]]),
+  swatch("true-autumn", [["light camel","#D9C39A"],["mustard gold","#B5842E"],["rust","#A4502A"],["deep olive","#4B5A2C"],["chestnut","#6B3A2A"],["forest teal","#2F4E4A"]]),
+  swatch("dark-autumn", [["old gold","#A88A55"],["espresso","#3A2018"],["oxblood","#6B2222"],["dark moss","#3B4A1F"],["tobacco","#7A4A1F"],["ink pine","#1D2A2A"]]),
+  swatch("dark-winter", [["true white","#ECEDEF"],["jet black","#14161C"],["dark navy","#1E2A44"],["bordeaux","#5E1A2B"],["spruce","#0E3B3A"],["aubergine","#2B1F3F"]]),
+  swatch("true-winter", [["pure white","#F4F4F4"],["true black","#0B0B10"],["navy","#14213F"],["royal blue","#1746C0"],["true red","#C20E2E"],["emerald","#0A6B4A"]]),
+  swatch("bright-winter", [["porcelain","#F7F7F2"],["obsidian","#0E0E0E"],["true blue","#1A53D0"],["emerald","#0AA06A"],["clear red","#DE1E3C"],["icy blue","#BDD0E6"]]),
 ];
 
 // `node tools/shots.mjs` → print the shot list
