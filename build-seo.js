@@ -145,6 +145,12 @@ const swatchStrip = (season) =>
     .join("") +
   `</div>`;
 
+const heroFigure = (season) => {
+  const file = `img/season-${season.key}.jpg`;
+  if (!fs.existsSync(path.join(__dirname, file))) return "";
+  return `<figure class="season-hero-figure"><img src="/${file}" alt="Folded men's cotton tees in the ${esc(season.name)} palette" loading="eager"/></figure>`;
+};
+
 const productCard = (p, key) =>
   `<a class="product" href="${esc(p.url)}" target="_blank" rel="sponsored noopener nofollow"` +
   ` data-id="${esc(p.id)}" data-brand="${esc(p.brand)}" data-hex="${p.hex}" data-season="${key}">` +
@@ -260,6 +266,7 @@ const page = (season, idx) => {
 ${NAV}
 <main class="wrap season-page">
   <nav class="crumb" aria-label="Breadcrumb"><a href="/">Garamond Goods</a> <span>/</span> <a href="/#seasons">Seasons</a> <span>/</span> ${esc(season.name)}</nav>
+  ${heroFigure(season)}
   <header class="season-hero">
     <div class="kicker sc">Season No. ${String(idx + 1).padStart(2, "0")} · ${esc(fam)}</div>
     <h1 class="display">${esc(sub)} <em>${esc(fam)}</em></h1>

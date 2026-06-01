@@ -1,0 +1,9 @@
+# Secrets — never commit. API tokens live OUTSIDE the repo (e.g. ~/.config/garamond.env).
+.env
+*.env
+*.token
+.replicate
+.replicate-token
+
+# macOS
+.DS_Store

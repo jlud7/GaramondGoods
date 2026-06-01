@@ -1,3 +1,4 @@
 # Dev tooling — kept in the repo, excluded from the deployed site.
 build-seo.js
 palette-review.html
+tools/

@@ -112,11 +112,25 @@
         el("div", { class: "season-note" }, "Shop " + season.name + " →"),
       ]);
 
+      // Flat-lay photo above the palette; if the image isn't generated yet the
+      // wrapper removes itself and the card falls back to the swatch-only design.
+      const photo = el("div", { class: "season-photo" }, [
+        el("img", {
+          src: "img/season-" + season.key + ".jpg",
+          alt: season.name + " palette — folded cotton tees",
+          loading: "lazy",
+          onerror: (e) => {
+            const w = e.target.closest(".season-photo");
+            if (w) w.remove();
+          },
+        }),
+      ]);
+
       return el("a", {
         class: "season",
         href: "/seasons/" + season.key,
         "aria-label": season.name + " — palette and tees",
-      }, [head, swatches, note]);
+      }, [photo, head, swatches, note]);
     }));
   }
 
