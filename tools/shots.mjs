@@ -68,6 +68,7 @@ const swatch = (key, colors) => ({
   slot: `homepage season grid — ${key}`,
   aspect_ratio: "3:2",
   preamble: SWATCH,
+  colors,
   prompt:
     "Six folded men's cotton crew tees arranged edge to edge in a single neat horizontal row " +
     "that evenly fills the full width of the frame, vertically centered, like a row of fabric " +
@@ -165,9 +166,10 @@ export const SHOTS = [
     preamble: BOHO,
     prompt:
       "Four men's cotton crew tees on simple pale-wood hangers, hung in an evenly spaced row from " +
-      "a thin natural wooden rail against a warm lime-washed plaster wall; the tees in bone, camel, " +
-      "rust and deep olive. A trailing green plant and a few dried pampas stems sit softly out of " +
-      "focus at one edge. Side daylight casts long, gentle shadows across the wall.",
+      "a thin natural wooden rail against a warm lime-washed plaster wall; the tees from left to " +
+      "right are deep olive, rust, camel and bone. A trailing green plant and a few dried pampas " +
+      "stems sit softly out of focus at the left edge. Side daylight casts long, gentle shadows " +
+      "across the wall.",
   },
   {
     id: "hang-single",

@@ -36,6 +36,7 @@ const quality = flag("--quality", "high");
 const count = parseInt(flag("-n", "1"), 10) || 1;
 const format = flag("--format", "jpeg"); // jpeg keeps photographic stills small + correctly served
 const concurrency = parseInt(flag("--concurrency", "4"), 10) || 4;
+const refPath = flag("--ref", ""); // master image to recolor per shot (size consistency)
 
 // ---- token ----
 // Accept either a bare token or a pasted `export REPLICATE_API_TOKEN="r8_..."`
@@ -62,6 +63,10 @@ function loadToken() {
   process.exit(1);
 }
 const TOKEN = loadToken();
+const REF_DATA = refPath
+  ? "data:image/jpeg;base64," +
+    fs.readFileSync(path.isAbsolute(refPath) ? refPath : path.join(SITE, refPath)).toString("base64")
+  : null;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const DONE = new Set(["succeeded", "failed", "canceled"]);
@@ -87,15 +92,22 @@ async function poll(url) {
 }
 
 async function run(shot) {
-  const payload = JSON.stringify({
-    input: {
-      prompt: `${shot.preamble ?? PREAMBLE}\n\n${shot.prompt}`,
-      aspect_ratio: shot.aspect_ratio,
-      quality,
-      number_of_images: count,
-      output_format: format === "jpg" ? "jpeg" : format,
-    },
-  });
+  const recolor = REF_DATA && shot.colors;
+  const input = {
+    prompt: recolor
+      ? "Use the attached reference image as an exact template. Keep its composition, the " +
+        "number of shirts, their size, spacing, folds, soft shadows, even lighting and plain " +
+        "cream paper background EXACTLY the same — do not move, resize, add or remove anything. " +
+        "Change ONLY the colors of the six folded tees, from left to right, to: " +
+        shot.colors.map(([n, h]) => `${n} (hex ${h.replace("#", "")})`).join(", ") + "."
+      : `${shot.preamble ?? PREAMBLE}\n\n${shot.prompt}`,
+    aspect_ratio: shot.aspect_ratio,
+    quality,
+    number_of_images: count,
+    output_format: format === "jpg" ? "jpeg" : format,
+  };
+  if (recolor) input.input_images = [REF_DATA];
+  const payload = JSON.stringify({ input });
   let res, pred;
   for (let attempt = 0; ; attempt++) {
     res = await fetch(ENDPOINT, {

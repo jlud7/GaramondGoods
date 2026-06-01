@@ -84,14 +84,22 @@
     const host = $("#season-grid");
     if (!host || !window.SEASONS) return;
 
-    host.replaceChildren(...window.SEASONS.map((season, i) => {
+    // 4×3 family layout: True across the top, the two variants beneath each.
+    const GRID_ORDER = [
+      "true-spring", "true-summer", "true-autumn", "true-winter",
+      "bright-spring", "light-summer", "soft-autumn", "dark-winter",
+      "light-spring", "soft-summer", "dark-autumn", "bright-winter",
+    ];
+    const byKey = Object.fromEntries(window.SEASONS.map((s) => [s.key, s]));
+    const ordered = GRID_ORDER.map((k) => byKey[k]).filter(Boolean);
+
+    host.replaceChildren(...ordered.map((season) => {
       const [family, ...rest] = season.name.split(" ");
       const head = el("div", { class: "season-head" }, [
         el("div", { class: "name" }, [
           family + " ",
           el("em", {}, rest.join(" ")),
         ]),
-        el("div", { class: "ref" }, "No. " + String(i + 1).padStart(2, "0")),
       ]);
 
       const note = el("div", { class: "season-note-wrap" }, [
