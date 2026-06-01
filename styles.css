@@ -145,6 +145,53 @@ h1.display em { font-style: italic; font-weight: 400; }
 .cta-link .arr { font-family: var(--mono); font-size: 13px; }
 .cta-aside { font-size: 13px; color: var(--ink-mute); white-space: nowrap; }
 
+/* ----- Full-bleed hero (image fills the viewport; copy in cream over a scrim) ----- */
+.hero-full {
+  position: relative;
+  height: calc(100svh - 64px);
+  min-height: 540px;
+  max-height: 940px;
+  overflow: hidden;
+  background: var(--ink);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  display: block;
+}
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,23,20,0.66), rgba(26,23,20,0.22) 44%, rgba(26,23,20,0) 68%);
+}
+.hero-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 66px;
+}
+.hero-copy { max-width: 640px; }
+.hero-full h1.display { color: var(--cream); margin: 0 0 22px; }
+.hero-full .subline { color: rgba(242,235,220,0.92); margin: 0 0 30px; max-width: 38ch; }
+.hero-full .cta-link { color: var(--cream); border-color: rgba(242,235,220,0.55); }
+.hero-full .cta-link.primary { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+.hero-full .cta-link.primary:hover { background: #fbf6ea; border-color: #fbf6ea; }
+.hero-full .cta-aside { color: rgba(242,235,220,0.72); margin-top: 18px; white-space: normal; }
+.hero-full .cta-aside .linkish { color: rgba(242,235,220,0.9); border-color: rgba(242,235,220,0.4); }
+.hero-full .cta-aside .linkish:hover { color: #fff; border-color: #fff; }
+@media (max-width: 880px) {
+  .hero-full { height: calc(100svh - 56px); min-height: 460px; }
+  .hero-inner { padding-bottom: 42px; }
+  .hero-full h1.display { font-size: 48px; }
+  .hero-copy { max-width: 100%; }
+}
+
 /* ----- "Shot" placeholder cards (pre-image) -----
    Shows a Pantone-style monospace shot-list framing the prompt that will
    be sent to GPT Image once wired up. The intent is that these cards stay
@@ -200,7 +247,7 @@ h1.display em { font-style: italic; font-weight: 400; }
   display: block;
   z-index: 1;
 }
-.shot:has(.shot-img) { background: var(--ink); }
+.shot:has(.shot-img) { background: var(--ink); border: none; }
 .shot:has(.shot-img)::before { display: none; }
 .shot:has(.shot-img) .prompt { display: none; }
 .shot:has(.shot-img) .label,
@@ -281,14 +328,10 @@ section.spread {
 .seasons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--rule);
-  border-left: 1px solid var(--rule);
+  gap: 44px 32px;
 }
 .season {
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding: 20px 20px 16px;
+  padding: 0;
   background: transparent;
   position: relative;
 }
@@ -845,10 +888,9 @@ a.season {
 
 /* Season cards carry their flat-lay photo above the palette (bleeds to edges) */
 .season-photo {
-  margin: -20px -20px 14px;
+  margin: 0 0 12px;
   aspect-ratio: 3 / 2;
   overflow: hidden;
-  border-bottom: 1px solid var(--rule);
   background: var(--cream-deep);
 }
 .season-photo img {
@@ -962,6 +1004,20 @@ a.product { text-decoration: none; color: inherit; display: block; }
   .boho-pair { grid-template-columns: 1fr; }
   .boho-pair .tall { aspect-ratio: 4 / 5; }
   .boho-pair .wide { aspect-ratio: 3 / 2; }
+}
+
+/* Catalog lede — one calm full-width band (the flat-lay), not a busy pair */
+.catalog-lede {
+  margin: 0 0 44px;
+  overflow: hidden;
+  background: var(--cream-deep);
+}
+.catalog-lede img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
 }
 
 /* Empty state when a color filter has no matches */

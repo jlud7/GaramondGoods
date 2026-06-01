@@ -94,26 +94,11 @@
         el("div", { class: "ref" }, "No. " + String(i + 1).padStart(2, "0")),
       ]);
 
-      const swatches = el(
-        "div",
-        { class: "swatches" },
-        season.swatches.map((s) =>
-          el("div", {
-            class: "sw",
-            style: { background: s.hex },
-            title: s.label + " · " + s.hex,
-          }, [
-            el("span", { class: "hex" }, s.hex.toUpperCase()),
-          ])
-        )
-      );
-
       const note = el("div", { class: "season-note-wrap" }, [
         el("div", { class: "season-note" }, "Shop " + season.name + " →"),
       ]);
 
-      // Flat-lay photo above the palette; if the image isn't generated yet the
-      // wrapper removes itself and the card falls back to the swatch-only design.
+      // The flat-lay photo IS the palette — no color chips. Card = photo + name.
       const photo = el("div", { class: "season-photo" }, [
         el("img", {
           src: "img/season-" + season.key + ".jpg",
@@ -130,7 +115,7 @@
         class: "season",
         href: "/seasons/" + season.key,
         "aria-label": season.name + " — palette and tees",
-      }, [photo, head, swatches, note]);
+      }, [photo, head, note]);
     }));
   }
 

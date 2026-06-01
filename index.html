@@ -38,58 +38,25 @@
 </nav>
 
 <!-- ============================================================ -->
-<!-- Hero — split: editorial copy + composed still-life placeholder -->
+<!-- Hero — full-bleed image; headline in cream over a soft scrim   -->
 <!-- ============================================================ -->
-<section class="hero" id="top">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="fade-in">
-        <div class="kicker sc">
-          Diagnosis
-          <span class="bullet"></span>
-          Catalog
-          <span class="bullet"></span>
-          House brand, soon
-        </div>
-        <h1 class="display">
-          The colors<br />that suit <em>you.</em>
-        </h1>
-        <p class="subline">
-          Solid-color basics from across menswear, filtered to the twelve-season
-          palette that actually suits you. Shop your colors now — or find your
-          season first.
-        </p>
-        <div class="cta-row">
-          <a class="cta-link primary" href="#catalog">
-            Shop your colors <span class="arr">→</span>
-          </a>
-          <a class="cta-link" href="#seasons">
-            Find your season <span class="arr">→</span>
-          </a>
-        </div>
-        <div class="cta-aside">
-          Photo color analysis arrives this fall —
-          <button class="linkish" data-open-upload type="button">preview it →</button>
-        </div>
+<section class="hero-full" id="top">
+  <img class="hero-bg" src="img/hang-rail.jpg" alt="Solid-color cotton tees on wooden hangers along a rail against a sunlit plaster wall" />
+  <div class="hero-veil"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy fade-in">
+      <h1 class="display">The colors<br />that suit <em>you.</em></h1>
+      <p class="subline">
+        Solid-color basics from across menswear, filtered to the
+        twelve-season palette that actually suits you.
+      </p>
+      <div class="cta-row">
+        <a class="cta-link primary" href="#catalog">Shop your colors <span class="arr">→</span></a>
+        <a class="cta-link" href="#seasons">Find your season <span class="arr">→</span></a>
       </div>
-
-      <div class="fade-in">
-        <!-- Placeholder shot card. Holds the GPT-Image prompt that will
-             be replaced by a generated still-life once the API is wired. -->
-        <div class="shot wide" role="img" aria-label="Flat-lay of six folded tees in a True Autumn palette">
-          <img class="shot-img" src="img/hero.jpg" alt="Six folded cotton tees in a True Autumn palette — camel, mustard gold, rust, olive, chestnut and forest teal — on cream paper in soft window light" loading="eager" onerror="this.remove()" />
-          <span class="label">Plate 01 — Hero</span>
-          <span class="num">EXT. WINDOW · 10:14</span>
-          <div class="prompt">
-            <span class="k">prompt:</span> overhead flat-lay photograph,
-            six folded men's cotton tees arranged in a 3×2 grid on
-            textured cream paper: deep olive, bone, navy, rust,
-            chambray, charcoal. Soft north-facing window light,
-            minor fabric shadows, medium-format grain, no props,
-            no logos, no people. 4:3 crop.
-          </div>
-        </div>
-        <div class="figure-caption">figure 01 · tees / cream paper / daylight</div>
+      <div class="cta-aside">
+        Photo color analysis arrives this fall —
+        <button class="linkish" data-open-upload type="button">preview it →</button>
       </div>
     </div>
   </div>
@@ -148,18 +115,7 @@
       <div>
         <div class="shot tall">
           <img class="shot-img" src="img/method.jpg" alt="A color-atelier desk — a fanned arc of swatch cards, a brass loupe, and two folded tees in olive and bone on linen" loading="lazy" onerror="this.remove()" />
-          <span class="label">Plate 02 — Artifact</span>
-          <span class="num">STILL LIFE · 14:22</span>
-          <div class="prompt">
-            <span class="k">prompt:</span> still life, a Pantone-style
-            swatch book opened to a spread of earth tones on a
-            linen-covered desk, a small stack of folded tees to one
-            side, brass loupe resting on the page. Shallow depth of
-            field, 35mm, editorial stillness, no hands, no screens,
-            no brand marks.
-          </div>
         </div>
-        <div class="figure-caption">figure 02 · swatch book / loupe / linen</div>
       </div>
     </div>
   </div>
@@ -173,8 +129,7 @@
     <img src="img/spectrum.jpg" alt="A long row of folded cotton tees flowing through the full color spectrum — cream and gold through rust, olive, teal, navy and burgundy to charcoal" loading="lazy" onerror="this.closest('.band').remove()" />
   </figure>
   <div class="band-cap">
-    <span>Plate 03 — The Spectrum</span>
-    <span>every color · one of them is yours</span>
+    <span>every color — one of them is yours</span>
   </div>
 </section>
 
@@ -199,8 +154,7 @@
              stays the single source of truth. -->
       </div>
       <div class="seasons-meta">
-        <span>click a season to shop it · hover to reveal hex</span>
-        <span>72 swatches · 12 seasons</span>
+        <span>Twelve seasons · click yours to shop it</span>
       </div>
     </div>
   </div>
@@ -221,9 +175,8 @@
       </div>
     </div>
 
-    <figure class="boho-pair fade-in">
-      <div class="tall"><img src="img/hang-single.jpg" alt="A single rust cotton tee on a pale-wood hanger against a warm plaster wall" loading="lazy" onerror="this.closest('.boho-pair').remove()" /></div>
-      <div class="wide"><img src="img/hang-rail.jpg" alt="Bone, camel, rust and olive cotton tees on wooden hangers along a rail in warm daylight" loading="lazy" onerror="this.closest('.boho-pair').remove()" /></div>
+    <figure class="catalog-lede fade-in">
+      <img src="img/hero.jpg" alt="Folded cotton tees in a True Autumn palette — camel, mustard gold, rust, olive, chestnut and forest teal — on cream paper" loading="lazy" onerror="this.closest('.catalog-lede').remove()" />
     </figure>
 
     <div class="fade-in">
